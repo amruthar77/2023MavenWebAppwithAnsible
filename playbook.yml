@@ -7,7 +7,7 @@
     - name: Copy WAR file to Tomcat
       copy:
         src: "/target/2023MavenWebAppwithAnsible.war"
-        dest: "/opt/tomcat/webapps/2023Mav
+        dest: "/opt/tomcat/webapps/2023MavenWebAppwithAnsible.war"
         remote_src: no
 
     - name: Restart Tomcat
