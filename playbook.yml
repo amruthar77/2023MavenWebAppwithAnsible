@@ -6,11 +6,12 @@
   tasks:
     - name: Copy WAR file to Tomcat
       copy:
-        src: "/target/2023MavenWebAppwithAnsible.war"
+        src: "/var/lib/jenkins/workspace/2023MavenWebAppwithAnsible/target/2023MavenWebAppwithAnsible.war"
         dest: "/opt/tomcat/webapps/2023MavenWebAppwithAnsible.war"
         remote_src: no
 
-    - name: Restart Tomcat
-      systemd:
-        name: tomcat
-        state: restarted
+    - name: Stop Tomcat
+      shell: /opt/tomcat/bin/shutdown.sh
+
+    - name: Start Tomcat
+      shell: /opt/tomcat/bin/startup.sh
