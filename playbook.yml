@@ -6,8 +6,8 @@
   tasks:
     - name: Copy WAR file to Tomcat
       copy:
-        src: "/var/lib/jenkins/workspace/2023MavenWebAppwithAnsible/target/2023MavenWebAppwithAnsible.war"
-        dest: "/opt/tomcat/webapps/2023MavenWebAppwithAnsible.war"
+        src: "/target/2023MavenWebAppwithAnsible.war"
+        dest: "/opt/tomcat/webapps/2023Mav
         remote_src: no
 
     - name: Restart Tomcat
