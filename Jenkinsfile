@@ -27,13 +27,23 @@ pipeline {
                 archiveArtifacts artifacts: 'target/*.war', fingerprint:true
             }
         }
-        stage('Deploy') {
-            steps {
-               sh 'mvn clean package'  
-               sh 'ansible-playbook playbook.yml -i hosts.ini '
-            }
-        }
-
+       stage('Deploy') {
+    steps {
+        // No need to run 'mvn clean package' again here; it was done in the Build stage!
+        
+        // If you have configured passwordless sudo for the jenkins user:
+        sh 'ansible-playbook playbook.yml -i hosts.ini' 
+        
+        // OR, if you use the Ansible Plugin (recommended):
+        /*
+        ansiblePlaybook(
+            playbook: 'playbook.yml',
+            inventory: 'hosts.ini',
+            sudoUser: 'root'
+        )
+        */
+    }
+}
                   
     }
 
