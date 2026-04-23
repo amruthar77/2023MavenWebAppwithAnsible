@@ -1,15 +1,20 @@
 ---
 - name: Deploy to Tomcat
   hosts: web
-  become: false
+  become: yes  # <--- MUST BE YES
 
   tasks:
     - name: Copy WAR file to Tomcat
       ansible.builtin.copy:
-        src: "/var/lib/jenkins/workspace/2023MavenWebAppwithAnsible/target/2023MavenWebAppwithAnsible.war"
+        # Use the relative path from the Jenkins workspace
+        src: "target/2023MavenWebAppwithAnsible.war"
         dest: "/opt/tomcat/webapps/2023MavenWebAppwithAnsible.war"
-        remote_src: no
+        owner: tomcat
+        group: tomcat
+        mode: '0644'
 
     - name: Restart Tomcat
-      shell: /opt/tomcat/bin/shutdown.sh
-             /opt/tomcat/bin/startup.sh
+      ansible.builtin.shell: |
+        /opt/tomcat/bin/shutdown.sh
+        sleep 2
+        /opt/tomcat/bin/startup.sh
